@@ -1,16 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Hotel bookings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
 </head>
-<body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
-  <script src="bundle.js"></script>
 
+<body>
+  <div class="overlay"></div>
+  <div class="main-container">
+    <header>
+      <nav class="main-nav-container">
+        <div class="nav-container-left" label="Welcome message for user">Welcome, John!</div>
+        <div class="nav-container-right">
+          <button class="nav-buttons">My bookings</button>
+          <button class="nav-buttons">Book a room</button>
+          <button class="nav-buttons">Sign out</button>
+        </div>
+      </nav>
+    </header>
+
+    <header class="view-text-container">Let's book your room</header>
+
+    <form class="input-container">
+      <input type="date" class="date-selector"/>
+      <select class="table-select">
+        <option>Choose type...</option>
+        <option>Queen</option>
+        <option>King</option>
+        <option>Double</option>
+        <option>Twin</option>
+        <option>Full</option>
+      </select>
+      <button class="find-room-button">Find room</button>
+    </form>
+    <div class="table-container">
+      <table>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+        <tr>
+          <td>Room 7 - single room</td>
+          <td>Queen - ocean view</td>
+          <td>$400/night</td>
+          <td><button class="table-button">Book</button></td>
+        </tr>
+      </table>
+    </div>
+
+
+
+
+
+
+    <section class="totals-container">
+      <div>Total bookings: 5</div>
+      <div>Total spent: $400</div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+    <script src="bundle.js"></script>
+  </div>
 </body>
+
 </html>
