@@ -25,17 +25,7 @@ body {
   padding: 5px; 
 }
 
-.find-room-button {
-  text-decoration: none;
-  background: none;
-  cursor: pointer;
-  border-radius: 16px;
-  border: solid 2px rgba(255, 255, 255, 0.5);
-  padding: 3px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
+.find-room-button,
 .table-button {
   text-decoration: none;
   background: none;
@@ -87,7 +77,8 @@ body {
   height: 125px;
 }
 
-.nav-container-left {
+.nav-container-left,
+.h1 {
   display: flex;
   justify-content: flex-start;
   width: 50%;
