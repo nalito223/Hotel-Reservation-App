@@ -1,8 +1,6 @@
-// import {testDataCustomer, testDataRooms, testDataBookings} from '../data'
-
 class Customer {
   constructor(customerData) {
-    this.id = customerData.id
+    this.customerId = customerData.id
     this.name = customerData.name 
   }
 }

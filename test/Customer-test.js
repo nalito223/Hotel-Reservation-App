@@ -19,7 +19,7 @@ describe('Customer', () => {
   })
 
   it('should have an ID', () => {
-    expect(customer.id).to.equal(1)
+    expect(customer.customerId).to.equal(1)
   })
 
 })
