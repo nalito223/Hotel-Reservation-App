@@ -26,13 +26,14 @@ body {
 }
 
 .find-room-button,
-.table-button {
+.table-button,
+.login-button {
   text-decoration: none;
   background: none;
   cursor: pointer;
   border-radius: 16px;
   border: solid 2px rgba(255, 255, 255, 0.5);
-  padding: 3px;
+  padding: 1px;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -42,7 +43,8 @@ body {
   transform: scale(1.1);
 }
 
-.nav-buttons:hover {
+.nav-buttons:hover,
+.login-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transition-duration: 400ms;
 }
@@ -111,7 +113,9 @@ h2 {
   padding-bottom: 25px;
 }
 
-.date-selector {
+.date-selector,
+.login-input-username,
+.login-input-password {
   border-radius: 16px;
   padding-left: 7px;
   padding-right: 7px;
@@ -164,3 +168,13 @@ table {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.sign-in-container {
+  /* display: flex;
+  justify-content: space-between; */
+  width: 100%;
+
+}
+
+.hidden {
+  display: none;
+}
