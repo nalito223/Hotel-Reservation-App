@@ -19,42 +19,50 @@ const inputContainer = document.querySelector('.input-container')
 const navContainerLeft = document.querySelector('.nav-container-left')
 const textBanner = document.querySelector('.text-banner')
 
+// global variables
+let testCustomer
+
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
     console.log(response)
-    initPage()
+    initPage(response)
   })
 })
 
 // functions 
-function initPage() {
-  console.log("init page!")
-  displayLogInPage()
-
+function initPage(response) {
+  //replace line below with function that grabs the customer who logs in 
+  testCustomer = response[2].customers[0]
+  console.log(testCustomer)
+  displayMyBookings()
+  // displayLogInPage()
 }
 
-function displayLogInPage() {
-  tableContainer.classList.add('hidden')
-  totalsContainer.classList.add('hidden')
-  navContainerRight.classList.add('hidden')
-  textBanner.innerText = 'Log in to get started'
-  inputContainer.innerHTML = `
 
-  <div class="sign-in-container">
-  <label for="uname">
-    <b>Username</b>
-  </label>
-  <input class="login-input-username" type="text" placeholder="Enter Username" name="uname" required>
-  <label for="psw">
-    <b>Password</b>
-  </label>
-  <input class="login-input-password" type="password" placeholder="Enter Password" name="psw" required>
-  <button class="login-button" type="submit">Log in</button>
-</div>
-
-  `
-
-  navContainerLeft.innerText = "Welcome!"
-
+function displayMyBookings() {
+  navContainerLeft.innerText = `Welcome, ${testCustomer.name.split(' ')[0]}!`
+  
 }
+
+// function displayLogInPage() {
+//   tableContainer.classList.add('hidden')
+//   totalsContainer.classList.add('hidden')
+//   navContainerRight.classList.add('hidden')
+//   textBanner.innerText = 'Log in to get started'
+//   inputContainer.innerHTML = `
+
+//   <div class="sign-in-container">
+//   <label for="uname">
+//     <b>Username</b>
+//   </label>
+//   <input class="login-input-username" type="text" placeholder="Enter Username" name="uname" required>
+//   <label for="psw">
+//     <b>Password</b>
+//   </label>
+//   <input class="login-input-password" type="password" placeholder="Enter Password" name="psw" required>
+//   <button class="login-button" type="submit">Log in</button>
+// </div>
+//   `
+//   navContainerLeft.innerText = "Welcome!"
+// }
