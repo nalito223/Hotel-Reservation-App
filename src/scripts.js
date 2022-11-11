@@ -28,6 +28,7 @@ const totalSpent = document.querySelector('#total-spent')
 const bookRoomButton = document.querySelector('#book-a-room-button')
 const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
+const tableSelect = document.querySelector('.table-select')
 
 // global variables
 let testCustomer
@@ -74,12 +75,23 @@ function initPage(response) {
 }
 
 function displayBookRoomExperience() {
+  // console.log("ALL ROOM TYPES",bookings.allRoomTypes)
   inputContainer.classList.remove('hidden')
   bookRoomButton.classList.add('selected-view')
   myBookingsButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Start booking by selecting a date below')
   displayTableViewMyBookingsMakeBooking()
+  displayFilterOptions()
+}
+
+function displayFilterOptions() {
+  tableSelect.innerHTML = '<option>Choose type...</option>'
+  bookings.allRoomTypes.forEach((type) => {
+    tableSelect.innerHTML += `
+    <option id="${type}">${type}</option>
+    `
+  }) 
 }
 
 function displayTableViewMyBookingsMakeBooking() {
