@@ -26,6 +26,8 @@ const myBookingsButton = document.querySelector('#my-bookings-button')
 const totalBookings = document.querySelector('#total-bookings')
 const totalSpent = document.querySelector('#total-spent')
 const bookRoomButton = document.querySelector('#book-a-room-button')
+const findRoomButton = document.querySelector('.find-room-button')
+const dateSelector = document.querySelector('.date-selector')
 
 // global variables
 let testCustomer
@@ -45,8 +47,18 @@ window.addEventListener('load', () => {
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
 myBookingsButton.addEventListener('click', displayMyBookings)
+// inputContainer.addEventListener('click', (event) => console.log("itworks", event))
+findRoomButton.addEventListener('click', (event) => event.preventDefault())
+table.addEventListener('click', (event) => {
+  console.log(event.target.id)
+})
+findRoomButton.addEventListener('click', filterAvailableRooms)
 
-// functions 
+function filterAvailableRooms() {
+  console.log("DATE SELECTOR", dateSelector.value)
+}
+
+
 function initPage(response) {
   randomIndex = Math.floor(Math.random() * response[2].customers.length);
   customerData = response[2].customers
@@ -67,6 +79,21 @@ function displayBookRoomExperience() {
   myBookingsButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Start booking by selecting a date below')
+  displayTableViewMyBookingsMakeBooking()
+}
+
+function displayTableViewMyBookingsMakeBooking() {
+  table.innerHTML = ''
+  testCustomer.customerBookingsList.forEach((booking) => {
+    table.innerHTML += `
+    <tr>
+    <td>${booking.bookingDate} - ${booking.roomType}</td>
+    <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
+    <td>$${booking.costPerNight}/night</td>
+    <td><button class="table-button" id="${booking.bookingId}">Book</button></td>
+    </tr>
+    `
+  })
 }
 
 function displayMyBookings() {
@@ -78,7 +105,7 @@ function displayMyBookings() {
   displayTableViewMyBookings()
   displayTotals()
   
-  console.log(testCustomer.customerBookingsList[0])
+  // console.log(testCustomer.customerBookingsList[0])
 }
 
 function displayTotals() {
