@@ -42,6 +42,7 @@ window.addEventListener('load', () => {
   })
 })
 
+
 // functions 
 function initPage(response) {
   customerData = response[2].customers
