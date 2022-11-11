@@ -54,6 +54,10 @@ body {
   transition-duration: 400ms;
 }
 
+.no-results {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 .overlay {
   position: absolute;
   top: 0;

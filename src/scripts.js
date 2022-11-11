@@ -30,6 +30,7 @@ const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
 
+
 // global variables
 let testCustomer
 let bookings 
@@ -55,8 +56,28 @@ table.addEventListener('click', (event) => {
 })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 
+
 function filterAvailableRooms() {
-  console.log("DATE SELECTOR", dateSelector.value)
+  let date = dateSelector.value
+  let type = tableSelect.value
+  let availableRooms = bookings.getAvailableRooms(date, type)
+  displayFilteredTableView()
+  // console.log("DATE SELECTOR", dateSelector.value)
+  // console.log("TABLE SELECT", tableSelect.value)
+}
+
+function displayFilteredTableView() {
+  table.innerHTML = ''
+  bookings.currAvailableRooms.forEach((availableRoom) => {
+    table.innerHTML += `
+    <tr>
+    <td>${availableRoom.availableRoomDate} - ${availableRoom.roomType}</td>
+    <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
+    <td>$${availableRoom.costPerNight}/night</td>
+    <td><button class="table-button" id="${availableRoom.bookingId}">Book</button></td>
+    </tr>
+    `
+  })
 }
 
 
@@ -80,8 +101,8 @@ function displayBookRoomExperience() {
   bookRoomButton.classList.add('selected-view')
   myBookingsButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
-  displayBannerText('Start booking by selecting a date below')
-  displayTableViewMyBookingsMakeBooking()
+  displayBannerText('Start booking by selecting a date and room type below')
+  displayTableViewMakeBooking()
   displayFilterOptions()
 }
 
@@ -94,18 +115,8 @@ function displayFilterOptions() {
   }) 
 }
 
-function displayTableViewMyBookingsMakeBooking() {
-  table.innerHTML = ''
-  testCustomer.customerBookingsList.forEach((booking) => {
-    table.innerHTML += `
-    <tr>
-    <td>${booking.bookingDate} - ${booking.roomType}</td>
-    <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
-    <td>$${booking.costPerNight}/night</td>
-    <td><button class="table-button" id="${booking.bookingId}">Book</button></td>
-    </tr>
-    `
-  })
+function displayTableViewMakeBooking() {
+  table.innerHTML = `<div class="no-results">No results. Select a date and room type then click 'Find room'.</div>`
 }
 
 function displayMyBookings() {

@@ -6,6 +6,8 @@ class Bookings {
     this.roomsData = roomsData
     this.allBookings = this.getAllBookings()
     this.allRoomTypes = this.getAllRoomTypes()
+    this.allPotentialRooms = this.getAllPotentialRooms()
+    this.currAvailableRooms = []
   }
   getAllBookings() {
     const a = this.bookingsData.reduce((acc, booking) => {
@@ -23,7 +25,6 @@ class Bookings {
     const a = this.allBookings.filter((booking) => {
       return booking.userId === customer.customerId
     })
-    // console.log('a',a)
     return a
   }
   getAllRoomTypes() {
@@ -35,6 +36,41 @@ class Bookings {
     })
     console.log(allRoomTypes)
     return allRoomTypes
+  }
+  getAvailableRooms(date, type) {
+    this.currAvailableRooms = this.allPotentialRooms
+    date = date.split("-").join("/")
+    const filteredBookingsConflictsByDate = this.allBookings.filter((booking) => {
+      return booking.bookingDate === date
+    })
+    const removeConflictDates = this.currAvailableRooms.forEach((room, index) => {
+      filteredBookingsConflictsByDate.forEach((conflict) => {
+        if (room.roomId === conflict.roomId) {
+          this.currAvailableRooms.splice(0, index)
+        }
+      })
+    })
+    const filteredByTag = this.currAvailableRooms.filter((room) => {
+      return room.roomType === type
+    })
+    this.currAvailableRooms = filteredByTag
+  }
+
+  getAllPotentialRooms() {
+    let uniqueRooms = []
+    const uniqueRoomNumbers = this.allBookings.reduce((acc, curr) => {
+      if (!acc.includes(curr.roomNumber))
+        acc.push(curr.roomNumber)
+      return acc
+    }, [])
+
+    const roomMatch = uniqueRoomNumbers.forEach((roomNum) => {
+      const room = this.allBookings.find((roomInfo) => {
+        return roomInfo.roomNumber === roomNum
+      })
+      uniqueRooms.push(room)
+    })
+    return uniqueRooms
   }
 }
 
