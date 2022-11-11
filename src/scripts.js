@@ -39,12 +39,21 @@ let bookingsData
 let roomData
 let customerBookings 
 let randomIndex 
+const date = new Date();
+let day = date.getDate();
+let month = date.getMonth();
+let year = date.getFullYear();
+let calendarPastDisableDate
+let calendarFutureDisableDate
+
 
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
     console.log(response)
     initPage(response)
+    calendarPastDisableDate = `${year}-${month + 1}-${day + 2}`
+    calendarFutureDisableDate = `${year + 1}-${month}-${day}`
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
@@ -60,10 +69,14 @@ findRoomButton.addEventListener('click', filterAvailableRooms)
 function filterAvailableRooms() {
   let date = dateSelector.value
   let type = tableSelect.value
-  let availableRooms = bookings.getAvailableRooms(date, type)
+  console.log(date)
+  console.log(type)
+  if (!date) {
+    displayTableViewMakeBooking()
+  } else {
+  bookings.getAvailableRooms(date, type)
   displayFilteredTableView()
-  // console.log("DATE SELECTOR", dateSelector.value)
-  // console.log("TABLE SELECT", tableSelect.value)
+  }
 }
 
 function displayFilteredTableView() {
@@ -90,7 +103,6 @@ function initPage(response) {
   bookings = new Bookings(bookingsData, roomData)
   testCustomer = new Customer(response[2].customers[randomIndex])
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-  
   displayMyBookings()
   // displayLogInPage()
 }
@@ -104,6 +116,12 @@ function displayBookRoomExperience() {
   displayBannerText('Start booking by selecting a date and room type below')
   displayTableViewMakeBooking()
   displayFilterOptions()
+  disableDatesInCalendar()
+}
+
+function disableDatesInCalendar() {
+  dateSelector.setAttribute("min", calendarPastDisableDate)
+  dateSelector.setAttribute("max", calendarFutureDisableDate)
 }
 
 function displayFilterOptions() {
@@ -116,7 +134,10 @@ function displayFilterOptions() {
 }
 
 function displayTableViewMakeBooking() {
-  table.innerHTML = `<div class="no-results">No results. Select a date and room type then click 'Find room'.</div>`
+  table.innerHTML = `
+  <div class="no-results">*No results. Select a date and room type then click 'Find room'.</div>
+  <div class="no-results"> Note: Reservations can be made no later than two days in advance and no sooner than one year into the future.
+  `
 }
 
 function displayMyBookings() {

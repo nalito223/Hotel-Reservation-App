@@ -50,10 +50,15 @@ class Bookings {
         }
       })
     })
+
+    if (type !== 'Choose type...') {
     const filteredByTag = this.currAvailableRooms.filter((room) => {
       return room.roomType === type
     })
     this.currAvailableRooms = filteredByTag
+  } else {
+    this.currAvailableRooms = this.currAvailableRooms
+  }
   }
 
   getAllPotentialRooms() {
