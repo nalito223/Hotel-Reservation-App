@@ -1,9 +1,29 @@
+const { Room } = require("./Room")
+
 class Bookings {
-  constructor(bookingsData) {
-    this.bookingsId = bookingsData.id
-    this.bookingsUserId = bookingsData.userID
-    this.date = bookingsData.date
-    this.roomNumber = bookingsData.roomNumber
+  constructor(bookingsData, roomsData) {
+    this.bookingsData = bookingsData
+    this.roomsData = roomsData
+    this.allBookings = this.getAllBookings()
+  }
+  getAllBookings() {
+    const a = this.bookingsData.reduce((acc, booking) => {
+      this.roomsData.forEach((room) => {
+        if (booking.roomNumber === room.number) {
+          acc.push(new Room(room, booking))
+        }
+      })
+      return acc
+    }, [])
+    return a
+  }
+
+  getCustomerBookings(customer) {
+    const a = this.allBookings.filter((booking) => {
+      return booking.userId === customer.customerId
+    })
+    // console.log('a',a)
+    return a
   }
 }
 

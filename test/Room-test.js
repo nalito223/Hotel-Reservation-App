@@ -4,10 +4,10 @@ import { Room } from '../src/classes/Room'
 import {testDataCustomer, testDataRooms, testDataBookings} from '../src/data/test-data'
 
 describe('Room', () => {
-  let room 
+  let room
 
   beforeEach(() => {
-    room = new Room(testDataRooms.rooms[0])
+    room = new Room(testDataRooms.rooms[0], testDataBookings.bookings[0])
   })
 
   it('should be an instance of Room', () => {
@@ -36,6 +36,21 @@ describe('Room', () => {
 
   it('should have a cost per night', () => {
     expect(room.costPerNight).to.equal(358.4)
+  })
+  it('should have an ID', () => {
+    expect(room.bookingId).to.equal("5fwrgu4i7k55hl6sz")
+  })
+
+  it('should have a user Id', () => {
+    expect(room.userId).to.equal(1)
+  })
+
+  it('should have a date', () => {
+    expect(room.bookingDate).to.equal("2022/04/22")
+  })
+
+  it('should have a room number', () => {
+    expect(room.roomNumber).to.equal(1)
   })
 
 })
