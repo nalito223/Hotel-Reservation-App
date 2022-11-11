@@ -25,6 +25,7 @@ const viewTextContainer = document.querySelector('.view-text-container')
 const myBookingsButton = document.querySelector('#my-bookings-button')
 const totalBookings = document.querySelector('#total-bookings')
 const totalSpent = document.querySelector('#total-spent')
+const bookRoomButton = document.querySelector('#book-a-room-button')
 
 // global variables
 let testCustomer
@@ -42,7 +43,8 @@ window.addEventListener('load', () => {
     initPage(response)
   })
 })
-
+bookRoomButton.addEventListener('click', displayBookRoomExperience)
+myBookingsButton.addEventListener('click', displayMyBookings)
 
 // functions 
 function initPage(response) {
@@ -59,11 +61,21 @@ function initPage(response) {
   // displayLogInPage()
 }
 
+function displayBookRoomExperience() {
+  inputContainer.classList.remove('hidden')
+  bookRoomButton.classList.add('selected-view')
+  myBookingsButton.classList.remove('selected-view')
+  displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
+  displayBannerText('Start booking by selecting a date below')
+}
+
 function displayMyBookings() {
+  inputContainer.classList.add('hidden')
   myBookingsButton.classList.add('selected-view')
+  bookRoomButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Review your bookings below')
-  displayTableView()
+  displayTableViewMyBookings()
   displayTotals()
   
   console.log(testCustomer.customerBookingsList[0])
@@ -84,13 +96,12 @@ function displayBannerText(text) {
   viewTextContainer.innerText = text
 }
 
-function displayTableView() {
+function displayTableViewMyBookings() {
   table.innerHTML = ''
-  inputContainer.classList.add('hidden')
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-    <td>Room ${booking.roomNumber} - ${booking.roomType}</td>
+    <td>${booking.bookingDate} - ${booking.roomType}</td>
     <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
     <td>$${booking.costPerNight}/night</td>
     <td>ID: ${booking.bookingId}</td>

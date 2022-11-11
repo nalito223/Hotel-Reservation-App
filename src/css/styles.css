@@ -109,8 +109,8 @@ h2 {
   align-items: flex-end;
   height: 50px;
   gap: 10%;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  /* padding-bottom: 20px; */
+  margin-bottom: 40px;
 }
 
 .date-selector,
@@ -144,7 +144,9 @@ h2 {
 }
 
 td {
-  padding: 15px
+  padding: 15px;
+  /* width: 25%; */
+  width: fit-content;
 }
 
 tr:hover {
