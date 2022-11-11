@@ -33,6 +33,7 @@ let customerData
 let bookingsData
 let roomData
 let customerBookings 
+let randomIndex 
 
 // event listeners
 window.addEventListener('load', () => {
@@ -45,12 +46,13 @@ window.addEventListener('load', () => {
 
 // functions 
 function initPage(response) {
+  randomIndex = Math.floor(Math.random() * response[2].customers.length);
   customerData = response[2].customers
   bookingsData = response[0].bookings
   roomData = response[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[2])
+  testCustomer = new Customer(response[2].customers[randomIndex])
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
   
   displayMyBookings()
