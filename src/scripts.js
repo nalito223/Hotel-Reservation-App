@@ -22,6 +22,9 @@ const navContainerLeft = document.querySelector('.nav-container-left')
 const textBanner = document.querySelector('.text-banner')
 const table = document.querySelector('table')
 const viewTextContainer = document.querySelector('.view-text-container')
+const myBookingsButton = document.querySelector('#my-bookings-button')
+const totalBookings = document.querySelector('#total-bookings')
+const totalSpent = document.querySelector('#total-spent')
 
 // global variables
 let testCustomer
@@ -46,20 +49,28 @@ function initPage(response) {
   roomData = response[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[0])
+  testCustomer = new Customer(response[2].customers[2])
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+  
   displayMyBookings()
   // displayLogInPage()
 }
 
 function displayMyBookings() {
-  
+  myBookingsButton.classList.add('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Review your bookings below')
   displayTableView()
+  displayTotals()
   
   console.log(testCustomer.customerBookingsList[0])
- 
+}
+
+function displayTotals() {
+ totalBookings.innerText = `Total bookings: ${testCustomer.customerBookingsList.length}`
+ totalSpent.innerText =  `Total spent: $${testCustomer.customerBookingsList.reduce((acc, curr) => {
+   return acc += curr.costPerNight
+ }, 0).toFixed(2)}`
 }
 
 function displayHeaderText(text) {
@@ -72,15 +83,16 @@ function displayBannerText(text) {
 
 function displayTableView() {
   table.innerHTML = ''
+  inputContainer.classList.add('hidden')
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-      <td>Room ${booking.roomNumber} - ${booking.roomType}</td>
-      <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
-      <td>$${booking.costPerNight}/night</td>
-      <td><button class="table-button">Book</button></td>
+    <td>Room ${booking.roomNumber} - ${booking.roomType}</td>
+    <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
+    <td>$${booking.costPerNight}/night</td>
+    <td>ID: ${booking.bookingId}</td>
     </tr>
-  `
+    `
   })
 }
 
