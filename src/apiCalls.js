@@ -27,7 +27,7 @@ const getAllData = () => {
 }
 
 function postData(body, url) {
-  return fetch(url, {
+  fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
@@ -43,6 +43,7 @@ function postData(body, url) {
     .catch(err => console.log(err))
     // unhide element here showing error message 
   })
+
 }
 
 export { getData, postData, getAllData } 

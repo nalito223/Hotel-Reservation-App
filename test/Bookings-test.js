@@ -20,7 +20,7 @@ describe('Bookings', () => {
   })
 
   it('should have a user Id', () => {
-    expect(bookings.bookingsUserId).to.equal(9)
+    expect(bookings.bookingsUserId).to.equal(1)
   })
 
   it('should have a date', () => {
@@ -28,7 +28,7 @@ describe('Bookings', () => {
   })
 
   it('should have a room number', () => {
-    expect(bookings.roomNumber).to.equal(15)
+    expect(bookings.roomNumber).to.equal(1)
   })
 
 })

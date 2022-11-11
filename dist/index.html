@@ -12,23 +12,29 @@
 </head>
 
 <body>
+
+
+
+
   <div class="overlay"></div>
   <div class="main-container">
     <header>
       <nav class="main-nav-container">
-        <div class="nav-container-left" label="Welcome message for user">Welcome, John!</div>
+        <div class="nav-container-left" label="Welcome message for user"></div>
         <div class="nav-container-right">
-          <button class="nav-buttons">My bookings</button>
+          <button class="nav-buttons" id="my-bookings-button">My bookings</button>
           <button class="nav-buttons">Book a room</button>
           <button class="nav-buttons">Sign out</button>
         </div>
       </nav>
     </header>
 
-    <header class="view-text-container"><h2>Let's book your room</h2></header>
+    <header class="view-text-container">
+      <h2 class="text-banner"></h2>
+    </header>
 
     <form class="input-container">
-      <input type="date" class="date-selector"/>
+      <input type="date" class="date-selector" />
       <select class="table-select">
         <option>Choose type...</option>
         <option>Queen</option>
@@ -41,108 +47,13 @@
     </form>
     <div class="table-container">
       <table>
-        <tr>
+        <!-- <tr>
           <td>Room 7 - single room</td>
           <td>Queen - ocean view</td>
           <td>$400/night</td>
           <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
-        <tr>
-          <td>Room 7 - single room</td>
-          <td>Queen - ocean view</td>
-          <td>$400/night</td>
-          <td><button class="table-button">Book</button></td>
-        </tr>
+        </tr> -->
+        
       </table>
     </div>
 
@@ -152,18 +63,9 @@
 
 
     <section class="totals-container">
-      <h2>Total bookings: 5</h2>
-      <h2>Total spent: $400</h2>
+      <h2 id="total-bookings"></h2>
+      <h2 id ="total-spent">Total spent: $400</h2>
     </section>
-
-
-
-
-
-
-
-
-
 
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
