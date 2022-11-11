@@ -54,6 +54,10 @@ body {
   transition-duration: 400ms;
 }
 
+.no-results {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 .overlay {
   position: absolute;
   top: 0;
@@ -109,8 +113,8 @@ h2 {
   align-items: flex-end;
   height: 50px;
   gap: 10%;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  /* padding-bottom: 20px; */
+  margin-bottom: 40px;
 }
 
 .date-selector,
@@ -144,7 +148,9 @@ h2 {
 }
 
 td {
-  padding: 15px
+  padding: 15px;
+  /* width: 25%; */
+  width: fit-content;
 }
 
 tr:hover {

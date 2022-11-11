@@ -23,7 +23,7 @@
         <div class="nav-container-left" label="Welcome message for user"></div>
         <div class="nav-container-right">
           <button class="nav-buttons" id="my-bookings-button">My bookings</button>
-          <button class="nav-buttons">Book a room</button>
+          <button id="book-a-room-button" class="nav-buttons">Book a room</button>
           <button class="nav-buttons">Sign out</button>
         </div>
       </nav>
@@ -34,7 +34,7 @@
     </header>
 
     <form class="input-container">
-      <input type="date" class="date-selector" />
+      <input type="date" min="2022-11-11" class="date-selector" data-date-format="YYYY/MMMM/DD"/>
       <select class="table-select">
         <option>Choose type...</option>
         <option>Queen</option>
@@ -47,12 +47,12 @@
     </form>
     <div class="table-container">
       <table>
-        <!-- <tr>
+        <tr>
           <td>Room 7 - single room</td>
           <td>Queen - ocean view</td>
           <td>$400/night</td>
           <td><button class="table-button">Book</button></td>
-        </tr> -->
+        </tr>
         
       </table>
     </div>
