@@ -82,6 +82,9 @@ function postBooking(event) {
         testCustomer = new Customer(response[2].customers[3])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
         filterAvailableRooms()
+        if (table.innerHTML === '') {
+          displayTableInstructions()
+        }
       })
     })
   }
@@ -91,7 +94,6 @@ function filterAvailableRooms() {
   let date = dateSelector.value
   let type = tableSelect.value
   if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate) {
-    // if (!date) {
     displayTableInstructions()
   } else {
     bookings.getAvailableRooms(date, type)
@@ -111,8 +113,10 @@ function displayFilteredTableView() {
     </tr>
     `
   })
+  if (table.innerText === '') {
+    displayTableInstructions()
+  }
 }
-
 
 function initPage(response) {
   customerData = response[2].customers
@@ -156,8 +160,8 @@ function displayFilterOptions() {
 
 function displayTableInstructions() {
   table.innerHTML = `
-  <div class="no-results">*No results. Select a date and room type then click 'Find room'.</div>
-  <div class="no-results"> Note: Reservations can be made no later than two days in advance and no sooner than one year into the future.
+  <div class="no-results">*No results. Select a new date and room type then click 'Find room'.</div>
+  <div class="no-results"> Note: Our sincere apologies if there is no availability on your requested date. Reservations can be made no later than two days in advance and no sooner than one year into the future.
   `
 }
 
@@ -207,6 +211,8 @@ function sortBookingsByDate() {
   })
 }
 
+
+// NOTE: everything below is commented out since it's the log in page and will interfere with the Lighthouse audit 
 // function displayLogInPage() {
 //   tableContainer.classList.add('hidden')
 //   totalsContainer.classList.add('hidden')
