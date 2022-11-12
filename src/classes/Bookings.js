@@ -67,8 +67,8 @@ class Bookings {
     } else {
       this.currAvailableRooms = this.currAvailableRooms
     }
-    console.log("length curr avail", this.currAvailableRooms.length)
-    console.log("length potential rooms", this.allPotentialRooms)
+    // console.log("length curr avail", this.currAvailableRooms.length)
+    // console.log("length potential rooms", this.allPotentialRooms)
 
   }
 

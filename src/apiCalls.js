@@ -27,12 +27,13 @@ const getAllData = () => {
 }
 
 function postData(body, url) {
-  fetch(url, {
+  return fetch(url, {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json'
     }
+  })
     .then((response) => {
       if (response.ok) {
         return response.json()
@@ -42,8 +43,6 @@ function postData(body, url) {
     })
     .catch(err => console.log(err))
     // unhide element here showing error message 
-  })
-
-}
+  }
 
 export { getData, postData, getAllData } 
