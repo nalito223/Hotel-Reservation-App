@@ -96,8 +96,8 @@ function postBooking(event) {
 function filterAvailableRooms() {
   let date = dateSelector.value
   let type = tableSelect.value
-  if (!date) {
-    displayTableViewMakeBooking()
+  if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate ) {
+    displayTableInstructions()
   } else {
   bookings.getAvailableRooms(date, type)
   displayFilteredTableView()
@@ -109,7 +109,7 @@ function displayFilteredTableView() {
   bookings.currAvailableRooms.forEach((availableRoom) => {
     table.innerHTML += `
     <tr>
-    <td>${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
+    <td>Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
     <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
     <td>$${availableRoom.costPerNight}/night</td>
     <td><button class="table-button" id="${availableRoom.roomNumber}">Book</button></td>
@@ -133,13 +133,12 @@ function initPage(response) {
 }
 
 function displayBookRoomExperience() {
-  // console.log("ALL ROOM TYPES",bookings.allRoomTypes)
   inputContainer.classList.remove('hidden')
   bookRoomButton.classList.add('selected-view')
   myBookingsButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Start booking by selecting a date and room type below')
-  displayTableViewMakeBooking()
+  displayTableInstructions()
   displayFilterOptions()
   disableDatesInCalendar()
 }
@@ -160,7 +159,7 @@ function displayFilterOptions() {
   }) 
 }
 
-function displayTableViewMakeBooking() {
+function displayTableInstructions() {
   table.innerHTML = `
   <div class="no-results">*No results. Select a date and room type then click 'Find room'.</div>
   <div class="no-results"> Note: Reservations can be made no later than two days in advance and no sooner than one year into the future.
@@ -175,8 +174,6 @@ function displayMyBookings() {
   displayBannerText('Review your bookings below')
   displayTableViewMyBookings()
   displayTotals()
-  
-  // console.log(testCustomer.customerBookingsList[0])
 }
 
 function displayTotals() {
@@ -195,16 +192,24 @@ function displayBannerText(text) {
 }
 
 function displayTableViewMyBookings() {
+  sortBookingsByDate()
   table.innerHTML = ''
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-    <td>${booking.bookingDate} - ${booking.roomNumber}</td>
+    <td>${booking.bookingDate} - Room #${booking.roomNumber}</td>
     <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
     <td>$${booking.costPerNight}/night</td>
     <td>ID: ${booking.bookingId}</td>
     </tr>
     `
+  })
+}
+
+function sortBookingsByDate() {
+  testCustomer.customerBookingsList = testCustomer.customerBookingsList.sort((a,b) => {
+    console.log(typeof a.bookingDate.split('/').join(''))
+    return Number(a.bookingDate.split('/').join('')) - Number(b.bookingDate.split('/').join(''))
   })
 }
 
