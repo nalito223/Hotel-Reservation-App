@@ -34,31 +34,42 @@ class Bookings {
         allRoomTypes.push(booking.roomType)
       }
     })
-    console.log(allRoomTypes)
     return allRoomTypes
   }
-  getAvailableRooms(date, type) {
-    this.currAvailableRooms = this.allPotentialRooms
-    date = date.split("-").join("/")
-    const filteredBookingsConflictsByDate = this.allBookings.filter((booking) => {
-      return booking.bookingDate === date
+  getAvailableRooms(inputDate, type) {
+    const allUniqueRooms = this.getAllPotentialRooms()
+    this.currAvailableRooms = allUniqueRooms.sort((a, b) => {
+      return a.roomNumber - b.roomNumber
     })
-    const removeConflictDates = this.currAvailableRooms.forEach((room, index) => {
-      filteredBookingsConflictsByDate.forEach((conflict) => {
-        if (room.roomId === conflict.roomId) {
-          this.currAvailableRooms.splice(0, index)
+    inputDate = inputDate.split("-").join("/")
+
+    let filteredArray = []
+
+    this.bookingsData.forEach((room) => {
+      if (inputDate === room.date) {
+        filteredArray.push(room)
+      }
+    })
+
+    this.currAvailableRooms.forEach((curr, index) => {
+      filteredArray.forEach((conflictRoom) => {
+        if (curr.roomNumber === conflictRoom.roomNumber) {
+          this.currAvailableRooms.splice(index, 1)
         }
       })
     })
 
     if (type !== 'Choose type...') {
-    const filteredByTag = this.currAvailableRooms.filter((room) => {
-      return room.roomType === type
-    })
-    this.currAvailableRooms = filteredByTag
-  } else {
-    this.currAvailableRooms = this.currAvailableRooms
-  }
+      const filteredByTag = this.currAvailableRooms.filter((room) => {
+        return room.roomType === type
+      })
+      this.currAvailableRooms = filteredByTag
+    } else {
+      this.currAvailableRooms = this.currAvailableRooms
+    }
+    console.log("length curr avail", this.currAvailableRooms.length)
+    console.log("length potential rooms", this.allPotentialRooms)
+
   }
 
   getAllPotentialRooms() {

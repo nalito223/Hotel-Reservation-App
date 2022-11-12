@@ -39,21 +39,18 @@ let bookingsData
 let roomData
 let customerBookings 
 let randomIndex 
-const date = new Date();
-let day = date.getDate();
-let month = date.getMonth();
-let year = date.getFullYear();
+const currentDate = new Date();
+let day = currentDate.getDate();
+let month = currentDate.getMonth();
+let year = currentDate.getFullYear();
 let calendarPastDisableDate
 let calendarFutureDisableDate
-
 
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
     console.log(response)
     initPage(response)
-    calendarPastDisableDate = `${year}-${month + 1}-${day + 2}`
-    calendarFutureDisableDate = `${year + 1}-${month}-${day}`
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
@@ -64,13 +61,25 @@ table.addEventListener('click', (event) => {
   console.log(event.target.id)
 })
 findRoomButton.addEventListener('click', filterAvailableRooms)
+table.addEventListener('click', postBooking)
 
+function postBooking(event) {
+  if (event.target.classList.contains('table-button')) {
+    let body = { 
+      "userID": testCustomer.userID, 
+      "date": "2019/09/23", 
+      "roomNumber": 4 
+    }
+  }
+}
 
 function filterAvailableRooms() {
+  // bookings.getAllPotentialRooms()
   let date = dateSelector.value
   let type = tableSelect.value
-  console.log(date)
-  console.log(type)
+  // displayFilterOptions()
+  // console.log(date)
+  // console.log(type)
   if (!date) {
     displayTableViewMakeBooking()
   } else {
@@ -84,7 +93,7 @@ function displayFilteredTableView() {
   bookings.currAvailableRooms.forEach((availableRoom) => {
     table.innerHTML += `
     <tr>
-    <td>${availableRoom.availableRoomDate} - ${availableRoom.roomType}</td>
+    <td>${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
     <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
     <td>$${availableRoom.costPerNight}/night</td>
     <td><button class="table-button" id="${availableRoom.bookingId}">Book</button></td>
@@ -120,6 +129,8 @@ function displayBookRoomExperience() {
 }
 
 function disableDatesInCalendar() {
+  calendarPastDisableDate = `${year}-${month + 1}-${day + 2}`
+  calendarFutureDisableDate = `${year + 1}-${month}-${day}`
   dateSelector.setAttribute("min", calendarPastDisableDate)
   dateSelector.setAttribute("max", calendarFutureDisableDate)
 }
@@ -202,9 +213,3 @@ function displayTableViewMyBookings() {
 //   `
 //   navContainerLeft.innerText = "Welcome!"
 // }
-
-let body = { "userID": 48, "date": "2019/09/23", "roomNumber": 4 }
-
-postData(body, urlNewBooking).then((response) => {
-  console.log("FETCH POST",response)
-})
