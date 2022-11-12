@@ -36,41 +36,6 @@ class Bookings {
     })
     return allRoomTypes
   }
-  getAvailableRooms(inputDate, type) {
-    const allUniqueRooms = this.getAllPotentialRooms()
-    this.currAvailableRooms = allUniqueRooms.sort((a, b) => {
-      return a.roomNumber - b.roomNumber
-    })
-    inputDate = inputDate.split("-").join("/")
-
-    let filteredArray = []
-
-    this.bookingsData.forEach((room) => {
-      if (inputDate === room.date) {
-        filteredArray.push(room)
-      }
-    })
-
-    this.currAvailableRooms.forEach((curr, index) => {
-      filteredArray.forEach((conflictRoom) => {
-        if (curr.roomNumber === conflictRoom.roomNumber) {
-          this.currAvailableRooms.splice(index, 1)
-        }
-      })
-    })
-
-    if (type !== 'Choose type...') {
-      const filteredByTag = this.currAvailableRooms.filter((room) => {
-        return room.roomType === type
-      })
-      this.currAvailableRooms = filteredByTag
-    } else {
-      this.currAvailableRooms = this.currAvailableRooms
-    }
-    // console.log("length curr avail", this.currAvailableRooms.length)
-    // console.log("length potential rooms", this.allPotentialRooms)
-
-  }
 
   getAllPotentialRooms() {
     let uniqueRooms = []
@@ -87,6 +52,37 @@ class Bookings {
       uniqueRooms.push(room)
     })
     return uniqueRooms
+  }
+
+  getAvailableRooms(inputDate, type) {
+    const allUniqueRooms = this.getAllPotentialRooms()
+    this.currAvailableRooms = allUniqueRooms.sort((a, b) => {
+      return a.roomNumber - b.roomNumber
+    })
+
+    let availRooms = []
+
+    inputDate = inputDate.split("-").join("/")
+    this.allBookings.forEach((booking) => {
+      if (inputDate === booking.bookingDate) {
+        availRooms.push(booking.roomNumber)
+      }
+    })
+
+    const finalAnswer = allUniqueRooms.filter((room) => {
+      return !availRooms.includes(room.roomNumber)
+    })
+
+    this.currAvailableRooms = finalAnswer
+
+    if (type !== 'Choose type...') {
+      const filteredByTag = this.currAvailableRooms.filter((room) => {
+        return room.roomType === type
+      })
+      this.currAvailableRooms = filteredByTag
+    } else {
+      this.currAvailableRooms = this.currAvailableRooms
+    }
   }
 }
 

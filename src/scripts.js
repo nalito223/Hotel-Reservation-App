@@ -1,6 +1,6 @@
 // imports 
 import { getData, postData, getAllData } from './apiCalls'
-import './css/styles.css';
+import './css/styles.css'
 import { Customer } from './classes/Customer'
 import { Bookings } from './classes/Bookings'
 
@@ -30,23 +30,21 @@ const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
 
-
-
 // global variables
 let testCustomer
-let bookings 
-let customerData 
+let bookings
+let customerData
 let bookingsData
 let roomData
-let customerBookings 
-let randomIndex 
-const currentDate = new Date();
-let day = currentDate.getDate();
-let month = currentDate.getMonth();
-let year = currentDate.getFullYear();
+let customerBookings
+let randomIndex
+const currentDate = new Date()
+let day = currentDate.getDate()
+let month = currentDate.getMonth()
+let year = currentDate.getFullYear()
 let calendarPastDisableDate
 let calendarFutureDisableDate
-let currCustomerIndex 
+let currCustomerIndex
 let customerID
 
 // event listeners
@@ -58,23 +56,21 @@ window.addEventListener('load', () => {
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
 myBookingsButton.addEventListener('click', displayMyBookings)
-// inputContainer.addEventListener('click', (event) => console.log("itworks", event))
 findRoomButton.addEventListener('click', (event) => event.preventDefault())
-table.addEventListener('click', (event) => {
-  console.log(event.target.id)
-})
+// table.addEventListener('click', (event) => {
+// })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
 
+//functions
 function postBooking(event) {
   let date = dateSelector.value.split("-").join("/")
   if (event.target.classList.contains('table-button')) {
-    let body = { 
-      "userID": testCustomer.customerId, 
-      "date": `${date}`, 
-      "roomNumber": Number(event.target.id) 
+    let body = {
+      "userID": testCustomer.customerId,
+      "date": `${date}`,
+      "roomNumber": Number(event.target.id)
     }
-    console.log(body)
     postData(body, urlNewBooking).then((response) => {
       console.log(response)
       getAllData().then((response) => {
@@ -82,12 +78,10 @@ function postBooking(event) {
         customerData = response[2].customers
         bookingsData = response[0].bookings
         roomData = response[1].rooms
-        
         bookings = new Bookings(bookingsData, roomData)
-        testCustomer = new Customer(response[2].customers[2])
+        testCustomer = new Customer(response[2].customers[3])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-        testCustomer.getCustomerIndex(customerData)
-        displayMyBookings()
+        filterAvailableRooms()
       })
     })
   }
@@ -96,11 +90,12 @@ function postBooking(event) {
 function filterAvailableRooms() {
   let date = dateSelector.value
   let type = tableSelect.value
-  if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate ) {
+  if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate) {
+    // if (!date) {
     displayTableInstructions()
   } else {
-  bookings.getAvailableRooms(date, type)
-  displayFilteredTableView()
+    bookings.getAvailableRooms(date, type)
+    displayFilteredTableView()
   }
 }
 
@@ -120,13 +115,13 @@ function displayFilteredTableView() {
 
 
 function initPage(response) {
-  randomIndex = Math.floor(Math.random() * response[2].customers.length);
   customerData = response[2].customers
   bookingsData = response[0].bookings
   roomData = response[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[2])
+  testCustomer = new Customer(response[2].customers[3])
+  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
   displayMyBookings()
   // displayLogInPage()
@@ -156,7 +151,7 @@ function displayFilterOptions() {
     tableSelect.innerHTML += `
     <option id="${type}">${type}</option>
     `
-  }) 
+  })
 }
 
 function displayTableInstructions() {
@@ -177,14 +172,14 @@ function displayMyBookings() {
 }
 
 function displayTotals() {
- totalBookings.innerText = `Total bookings: ${testCustomer.customerBookingsList.length}`
- totalSpent.innerText =  `Total spent: $${testCustomer.customerBookingsList.reduce((acc, curr) => {
-   return acc += curr.costPerNight
- }, 0).toFixed(2)}`
+  totalBookings.innerText = `Total bookings: ${testCustomer.customerBookingsList.length}`
+  totalSpent.innerText = `Total spent: $${testCustomer.customerBookingsList.reduce((acc, curr) => {
+    return acc += curr.costPerNight
+  }, 0).toFixed(2)}`
 }
 
 function displayHeaderText(text) {
-  navContainerLeft.innerText = text 
+  navContainerLeft.innerText = text
 }
 
 function displayBannerText(text) {
@@ -207,8 +202,7 @@ function displayTableViewMyBookings() {
 }
 
 function sortBookingsByDate() {
-  testCustomer.customerBookingsList = testCustomer.customerBookingsList.sort((a,b) => {
-    console.log(typeof a.bookingDate.split('/').join(''))
+  testCustomer.customerBookingsList = testCustomer.customerBookingsList.sort((a, b) => {
     return Number(a.bookingDate.split('/').join('')) - Number(b.bookingDate.split('/').join(''))
   })
 }
