@@ -8,7 +8,7 @@ import { Bookings } from './classes/Bookings'
 const urlCustomers = 'http://localhost:3001/api/v1/customers'
 const urlRooms = 'http://localhost:3001/api/v1/rooms'
 const urlBookings = 'http://localhost:3001/api/v1/bookings'
-const urlSingleCustomer = 'http://localhost:3001/api/v1/customers/'
+let urlSingleCustomer = 'http://localhost:3001/api/v1/customers/'
 const urlNewBooking = 'http://localhost:3001/api/v1/bookings'
 
 // query selectors
@@ -31,6 +31,7 @@ const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
 
 
+
 // global variables
 let testCustomer
 let bookings 
@@ -45,6 +46,8 @@ let month = currentDate.getMonth();
 let year = currentDate.getFullYear();
 let calendarPastDisableDate
 let calendarFutureDisableDate
+let currCustomerIndex 
+let customerID
 
 // event listeners
 window.addEventListener('load', () => {
@@ -64,22 +67,35 @@ findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
 
 function postBooking(event) {
+  let date = dateSelector.value.split("-").join("/")
   if (event.target.classList.contains('table-button')) {
     let body = { 
-      "userID": testCustomer.userID, 
-      "date": "2019/09/23", 
-      "roomNumber": 4 
+      "userID": testCustomer.customerId, 
+      "date": `${date}`, 
+      "roomNumber": Number(event.target.id) 
     }
+    console.log(body)
+    postData(body, urlNewBooking).then((response) => {
+      console.log(response)
+      getAllData().then((response) => {
+        console.log(response)
+        customerData = response[2].customers
+        bookingsData = response[0].bookings
+        roomData = response[1].rooms
+        
+        bookings = new Bookings(bookingsData, roomData)
+        testCustomer = new Customer(response[2].customers[2])
+        testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+        testCustomer.getCustomerIndex(customerData)
+        displayMyBookings()
+      })
+    })
   }
 }
 
 function filterAvailableRooms() {
-  // bookings.getAllPotentialRooms()
   let date = dateSelector.value
   let type = tableSelect.value
-  // displayFilterOptions()
-  // console.log(date)
-  // console.log(type)
   if (!date) {
     displayTableViewMakeBooking()
   } else {
@@ -96,7 +112,7 @@ function displayFilteredTableView() {
     <td>${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
     <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
     <td>$${availableRoom.costPerNight}/night</td>
-    <td><button class="table-button" id="${availableRoom.bookingId}">Book</button></td>
+    <td><button class="table-button" id="${availableRoom.roomNumber}">Book</button></td>
     </tr>
     `
   })
@@ -110,7 +126,7 @@ function initPage(response) {
   roomData = response[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[randomIndex])
+  testCustomer = new Customer(response[2].customers[2])
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
   displayMyBookings()
   // displayLogInPage()
@@ -183,7 +199,7 @@ function displayTableViewMyBookings() {
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-    <td>${booking.bookingDate} - ${booking.roomType}</td>
+    <td>${booking.bookingDate} - ${booking.roomNumber}</td>
     <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
     <td>$${booking.costPerNight}/night</td>
     <td>ID: ${booking.bookingId}</td>
