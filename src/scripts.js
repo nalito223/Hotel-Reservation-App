@@ -61,6 +61,12 @@ findRoomButton.addEventListener('click', (event) => event.preventDefault())
 // })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
+document.addEventListener('keypress', event => {
+  if(event.key === "Enter") {
+    event.preventDefault()
+    event.target.click()
+  }
+})
 
 //functions
 function postBooking(event) {
