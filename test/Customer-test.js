@@ -3,6 +3,7 @@ const expect = chai.expect
 import { Customer } from '../src/classes/Customer'
 import {testDataCustomer, testDataRooms, testDataBookings} from '../src/data/test-data'
 
+
 describe('Customer', () => {
   let customer 
 

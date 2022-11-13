@@ -9,6 +9,7 @@ class Bookings {
     this.allPotentialRooms = this.getAllPotentialRooms()
     this.currAvailableRooms = []
   }
+
   getAllBookings() {
     const a = this.bookingsData.reduce((acc, booking) => {
       this.roomsData.forEach((room) => {
@@ -27,6 +28,7 @@ class Bookings {
     })
     return a
   }
+
   getAllRoomTypes() {
     let allRoomTypes = []
     this.allBookings.forEach((booking) => {

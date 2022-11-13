@@ -5,29 +5,22 @@ import {testDataCustomer, testDataRooms, testDataBookings} from '../src/data/tes
 
 describe('Bookings', () => {
   let bookings 
-
+  
   beforeEach(() => {
-    bookings = new Bookings(testDataBookings, testDataRooms)
+    testDataRooms = testDataRooms.rooms
+    testDataBookings = testDataBookings.bookings
+    newBookings = new Bookings(testDataBookings, testDataRooms)
+    console.log(bookings)
   })
 
   it('should be an instance of Bookings', () => {
-    expect(bookings).to.be.an.instanceOf(Bookings)
+    expect(newBookings).to.be.an.instanceOf(Bookings)
   })
 
-  it('should have an ID', () => {
-    expect(bookings[0].bookingsId).to.equal("5fwrgu4i7k55hl6sz")
+  it('should have booking data', () => {
+    console.log("LOOK HERE", bookings)
+    expect(newBookings.bookingsData).to.equal(testDataBookings)
   })
 
-  it('should have a user Id', () => {
-    expect(bookings[0].bookingsUserId).to.equal(1)
-  })
-
-  it('should have a date', () => {
-    expect(bookings.date).to.equal("2022/04/22")
-  })
-
-  it('should have a room number', () => {
-    expect(bookings.roomNumber).to.equal(1)
-  })
-
+  
 })
