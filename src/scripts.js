@@ -3,6 +3,7 @@ import { getData, postData, getAllData } from './apiCalls'
 import './css/styles.css'
 import { Customer } from './classes/Customer'
 import { Bookings } from './classes/Bookings'
+import { getCustomer } from './classes/Customer'
 
 // api urls
 const urlCustomers = 'http://localhost:3001/api/v1/customers'
@@ -32,6 +33,7 @@ const tableSelect = document.querySelector('.table-select')
 const usernameInput = document.querySelector('.login-input-username')
 const passwordInput = document.querySelector('.login-input-password')
 const loginButton = document.querySelector('.login-button')
+const signInForm = document.querySelector('.sign-in-form')
 
 // global variables
 let testCustomer
@@ -49,12 +51,18 @@ let calendarPastDisableDate
 let calendarFutureDisableDate
 let currCustomerIndex
 let customerID
+let responseData
+// let username
 
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
+    responseData = response
     console.log(response)
     initPage(response)
+    // displayLogInPage()
+  }).then((response) => {
+    // evaluateLogin()
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
@@ -65,7 +73,7 @@ table.addEventListener('click', postBooking)
 loginButton.addEventListener('click', evaluateLogin)
 
 document.addEventListener('keypress', event => {
-  if(event.key === "Enter") {
+  if (event.key === "Enter") {
     event.preventDefault()
     event.target.click()
   }
@@ -87,9 +95,19 @@ function postBooking(event) {
         customerData = response[2].customers
         bookingsData = response[0].bookings
         roomData = response[1].rooms
+
         bookings = new Bookings(bookingsData, roomData)
-        testCustomer = new Customer(response[2].customers[3])
+        console.log(currCustomerIndex)
+        testCustomer = new Customer(response[2].customers[currCustomerIndex])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+        
+        // bookings = new Bookings(bookingsData, roomData)
+        // testCustomer = new Customer(customerData[testCustomer.getCustomerIndex(customerData, username)])
+        // console.log("AFTER", testCustomer)
+        // currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
+        // testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+
+
         filterAvailableRooms()
         if (table.innerHTML === '') {
           displayTableInstructions()
@@ -127,14 +145,14 @@ function displayFilteredTableView() {
   }
 }
 
-function initPage(response) {
-  customerData = response[2].customers
-  bookingsData = response[0].bookings
-  roomData = response[1].rooms
+function initPage(responseData) {
+  customerData = responseData[2].customers
+  bookingsData = responseData[0].bookings
+  roomData = responseData[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[3])
-  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
+  testCustomer = new Customer(responseData[2].customers[2])
+  // currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
   // displayMyBookings()
   displayLogInPage()
@@ -177,6 +195,12 @@ function displayTableInstructions() {
 }
 
 function displayMyBookings() {
+  signInForm.classList.add('hidden')
+  tableContainer.classList.remove('hidden')
+  totalsContainer.classList.remove('hidden')
+  navContainerRight.classList.remove('hidden')
+  inputContainer.classList.remove('hidden')
+  navContainerLeft.classList.remove('loginStyling')
   inputContainer.classList.add('hidden')
   myBookingsButton.classList.add('selected-view')
   bookRoomButton.classList.remove('selected-view')
@@ -226,6 +250,8 @@ function sortBookingsByDate() {
 
 
 function displayLogInPage() {
+  usernameInput.value = ''
+  passwordInput.value = ''
   tableContainer.classList.add('hidden')
   totalsContainer.classList.add('hidden')
   navContainerRight.classList.add('hidden')
@@ -237,7 +263,26 @@ function displayLogInPage() {
 
 function evaluateLogin(event) {
   event.preventDefault()
-  let username 
-  let password
-  
+  let username = Number(usernameInput.value.slice(8))
+  let password = passwordInput.value
+
+  console.log("BEFORE", testCustomer)
+  let verified = testCustomer.checkCredentials(username, password, customerData) 
+  if (verified) {
+    currCustomerIndex = testCustomer.getCustomerIndex(customerData, username)
+    bookings = new Bookings(bookingsData, roomData)
+    console.log(customerData[currCustomerIndex])
+    testCustomer = new Customer(customerData[currCustomerIndex])
+    console.log("AFTER", testCustomer)
+    console.log("eval log in", currCustomerIndex)
+    testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+    displayMyBookings()
+  } else {
+    alert("wrong password")
+  }
 }
+
+  //  testCustomer = new Customer(response[2].customers[3])
+  //  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
+
+ 
