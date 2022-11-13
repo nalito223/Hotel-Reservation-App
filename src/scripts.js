@@ -112,10 +112,10 @@ function displayFilteredTableView() {
   bookings.currAvailableRooms.forEach((availableRoom) => {
     table.innerHTML += `
     <tr>
-    <td>Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
-    <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
-    <td>$${availableRoom.costPerNight}/night</td>
-    <td><button class="table-button" id="${availableRoom.roomNumber}">Book</button></td>
+    <td tabindex="0">Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
+    <td tabindex="0">${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
+    <td tabindex="0">$${availableRoom.costPerNight}/night</td>
+    <td tabindex="0"><button class="table-button" id="${availableRoom.roomNumber}" tabindex="0">Book</button></td>
     </tr>
     `
   })
@@ -142,7 +142,7 @@ function displayBookRoomExperience() {
   bookRoomButton.classList.add('selected-view')
   myBookingsButton.classList.remove('selected-view')
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
-  displayBannerText('Start booking by selecting a date and room type below')
+  displayBannerText('Start booking by selecting a date and optional room type below')
   displayTableInstructions()
   displayFilterOptions()
   disableDatesInCalendar()
@@ -166,8 +166,8 @@ function displayFilterOptions() {
 
 function displayTableInstructions() {
   table.innerHTML = `
-  <div class="no-results">*No results. Select a new date and room type then click 'Find room'.</div>
-  <div class="no-results"> Note: Our sincere apologies if there is no availability on your requested date. Reservations can be made no later than two days in advance and no sooner than one year into the future.
+  <div class="no-results" tabindex="0">*No results. Select a new date and optional room type then click 'Find room'.</div>
+  <div class="no-results" tabindex="0"> Note: Our sincere apologies if there is no availability on your requested date. Reservations can be made no later than two days in advance and no sooner than one year into the future.
   `
 }
 
@@ -202,10 +202,10 @@ function displayTableViewMyBookings() {
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-    <td>${booking.bookingDate} - Room #${booking.roomNumber}</td>
-    <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
-    <td>$${booking.costPerNight}/night</td>
-    <td>ID: ${booking.bookingId}</td>
+    <td tabindex="0">${booking.bookingDate} - Room #${booking.roomNumber}</td>
+    <td tabindex="0">${booking.numBeds} ${booking.bedSize} size bed(s)</td>
+    <td tabindex="0">$${booking.costPerNight}/night</td>
+    <td tabindex="0">ID: ${booking.bookingId}</td>
     </tr>
     `
   })
