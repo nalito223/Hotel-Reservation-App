@@ -13,11 +13,9 @@
 
 <body>
   <div class="overlay"></div>
-  <!-- <div class="log-in-margin"></div> -->
   <div class="main-container">
     <header>
       <nav class="main-nav-container">
-      
         <div class="nav-container-left" label="Welcome message for user" tabindex="0"></div>
         <div class="nav-container-right hidden">
           <button class="nav-buttons" id="my-bookings-button" tabindex="0" aria-label="button to view my bookings"
@@ -25,7 +23,8 @@
             bookings</button>
           <button id="book-a-room-button" class="nav-buttons" tabindex="0"
             aria-label="button to go to view for making a new booking" aria-selected="false">Book a room</button>
-          <button class="nav-buttons" id="sign-out-button" tabindex="0" aria-label="button to sign out of current account">Sign out</button>
+          <button class="nav-buttons" id="sign-out-button" tabindex="0"
+            aria-label="button to sign out of current account">Sign out</button>
         </div>
       </nav>
     </header>
@@ -59,8 +58,8 @@
       <h2 id="total-bookings" tabindex="0"></h2>
       <h2 id="total-spent" tabindex="0">Total spent: $400</h2>
     </section>
-    
-    
+
+
     <form class="sign-in-form">
       <div class="sign-in-container">
         <label for="uname">Username</label>
@@ -70,6 +69,7 @@
         <button class="login-button" type="submit">Log in</button>
       </div>
     </form>
+
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
   </div>

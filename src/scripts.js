@@ -53,7 +53,6 @@ let calendarFutureDisableDate
 let currCustomerIndex
 let customerID
 let responseData
-// let username
 
 // event listeners
 window.addEventListener('load', () => {
@@ -61,9 +60,7 @@ window.addEventListener('load', () => {
     responseData = response
     console.log(response)
     initPage(response)
-    // displayLogInPage()
   }).then((response) => {
-    // evaluateLogin()
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
@@ -72,7 +69,7 @@ findRoomButton.addEventListener('click', (event) => event.preventDefault())
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
 loginButton.addEventListener('click', evaluateLogin)
-
+signOutButton.addEventListener('click', reloadPage)
 document.addEventListener('keypress', event => {
   if (event.key === "Enter") {
     event.preventDefault()
@@ -80,10 +77,7 @@ document.addEventListener('keypress', event => {
   }
 })
 
-signOutButton.addEventListener('click', reloadPage)
-
 //functions
-
 function reloadPage() {
   window.location.reload()
 }
@@ -103,19 +97,10 @@ function postBooking(event) {
         customerData = response[2].customers
         bookingsData = response[0].bookings
         roomData = response[1].rooms
-
         bookings = new Bookings(bookingsData, roomData)
         console.log(currCustomerIndex)
         testCustomer = new Customer(response[2].customers[currCustomerIndex])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-        
-        // bookings = new Bookings(bookingsData, roomData)
-        // testCustomer = new Customer(customerData[testCustomer.getCustomerIndex(customerData, username)])
-        // console.log("AFTER", testCustomer)
-        // currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
-        // testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-
-
         filterAvailableRooms()
         if (table.innerHTML === '') {
           displayTableInstructions()
@@ -157,12 +142,9 @@ function initPage(responseData) {
   customerData = responseData[2].customers
   bookingsData = responseData[0].bookings
   roomData = responseData[1].rooms
-
   bookings = new Bookings(bookingsData, roomData)
   testCustomer = new Customer(responseData[2].customers[2])
-  // currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-  // displayMyBookings()
   displayLogInPage()
 }
 
@@ -274,7 +256,7 @@ function evaluateLogin(event) {
   event.preventDefault()
   let username = Number(usernameInput.value.slice(8))
   let password = passwordInput.value
-  let verified = testCustomer.checkCredentials(username, password, customerData) 
+  let verified = testCustomer.checkCredentials(username, password, customerData)
   if (verified) {
     currCustomerIndex = testCustomer.getCustomerIndex(customerData, username)
     bookings = new Bookings(bookingsData, roomData)
@@ -287,6 +269,5 @@ function evaluateLogin(event) {
 }
 
 
-  
 
- 
+
