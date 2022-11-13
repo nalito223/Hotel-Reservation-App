@@ -3,6 +3,7 @@ import { getData, postData, getAllData } from './apiCalls'
 import './css/styles.css'
 import { Customer } from './classes/Customer'
 import { Bookings } from './classes/Bookings'
+import { getCustomer } from './classes/Customer'
 
 // api urls
 const urlCustomers = 'http://localhost:3001/api/v1/customers'
@@ -29,6 +30,11 @@ const bookRoomButton = document.querySelector('#book-a-room-button')
 const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
+const usernameInput = document.querySelector('.login-input-username')
+const passwordInput = document.querySelector('.login-input-password')
+const loginButton = document.querySelector('.login-button')
+const signInForm = document.querySelector('.sign-in-form')
+const signOutButton = document.querySelector('#sign-out-button')
 
 // global variables
 let testCustomer
@@ -46,29 +52,36 @@ let calendarPastDisableDate
 let calendarFutureDisableDate
 let currCustomerIndex
 let customerID
+let responseData
 
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
+    responseData = response
     console.log(response)
     initPage(response)
+  }).then((response) => {
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
 myBookingsButton.addEventListener('click', displayMyBookings)
 findRoomButton.addEventListener('click', (event) => event.preventDefault())
-// table.addEventListener('click', (event) => {
-// })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
+loginButton.addEventListener('click', evaluateLogin)
+signOutButton.addEventListener('click', reloadPage)
 document.addEventListener('keypress', event => {
-  if(event.key === "Enter") {
+  if (event.key === "Enter") {
     event.preventDefault()
     event.target.click()
   }
 })
 
 //functions
+function reloadPage() {
+  window.location.reload()
+}
+
 function postBooking(event) {
   let date = dateSelector.value.split("-").join("/")
   if (event.target.classList.contains('table-button')) {
@@ -85,7 +98,8 @@ function postBooking(event) {
         bookingsData = response[0].bookings
         roomData = response[1].rooms
         bookings = new Bookings(bookingsData, roomData)
-        testCustomer = new Customer(response[2].customers[3])
+        console.log(currCustomerIndex)
+        testCustomer = new Customer(response[2].customers[currCustomerIndex])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
         filterAvailableRooms()
         if (table.innerHTML === '') {
@@ -124,17 +138,14 @@ function displayFilteredTableView() {
   }
 }
 
-function initPage(response) {
-  customerData = response[2].customers
-  bookingsData = response[0].bookings
-  roomData = response[1].rooms
-
+function initPage(responseData) {
+  customerData = responseData[2].customers
+  bookingsData = responseData[0].bookings
+  roomData = responseData[1].rooms
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[3])
-  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
+  testCustomer = new Customer(responseData[2].customers[2])
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-  displayMyBookings()
-  // displayLogInPage()
+  displayLogInPage()
 }
 
 function displayBookRoomExperience() {
@@ -174,6 +185,13 @@ function displayTableInstructions() {
 }
 
 function displayMyBookings() {
+  mainContainer.classList.remove('add-padding')
+  signInForm.classList.add('hidden')
+  tableContainer.classList.remove('hidden')
+  totalsContainer.classList.remove('hidden')
+  navContainerRight.classList.remove('hidden')
+  inputContainer.classList.remove('hidden')
+  navContainerLeft.classList.remove('loginStyling')
   inputContainer.classList.add('hidden')
   myBookingsButton.classList.add('selected-view')
   bookRoomButton.classList.remove('selected-view')
@@ -221,26 +239,35 @@ function sortBookingsByDate() {
   })
 }
 
+function displayLogInPage() {
+  usernameInput.value = ''
+  passwordInput.value = ''
+  tableContainer.classList.add('hidden')
+  totalsContainer.classList.add('hidden')
+  navContainerRight.classList.add('hidden')
+  inputContainer.classList.add('hidden')
+  navContainerLeft.classList.add('loginStyling')
+  mainContainer.classList.add('add-padding')
+  textBanner.innerText = 'Please sign in to get started'
+  navContainerLeft.innerText = "Welcome!"
+}
 
-// NOTE: everything below is commented out since it's the log in page and will interfere with the Lighthouse audit 
-// function displayLogInPage() {
-//   tableContainer.classList.add('hidden')
-//   totalsContainer.classList.add('hidden')
-//   navContainerRight.classList.add('hidden')
-//   textBanner.innerText = 'Log in to get started'
-//   inputContainer.innerHTML = `
+function evaluateLogin(event) {
+  event.preventDefault()
+  let username = Number(usernameInput.value.slice(8))
+  let password = passwordInput.value
+  let verified = testCustomer.checkCredentials(username, password, customerData)
+  if (verified) {
+    currCustomerIndex = testCustomer.getCustomerIndex(customerData, username)
+    bookings = new Bookings(bookingsData, roomData)
+    testCustomer = new Customer(customerData[currCustomerIndex])
+    testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
+    displayMyBookings()
+  } else {
+    textBanner.innerText = '*Incorrect username or password. Please try again. Case sensitive.'
+  }
+}
 
-//   <div class="sign-in-container">
-//   <label for="uname">
-//     <b>Username</b>
-//   </label>
-//   <input class="login-input-username" type="text" placeholder="Enter Username" name="uname" required>
-//   <label for="psw">
-//     <b>Password</b>
-//   </label>
-//   <input class="login-input-password" type="password" placeholder="Enter Password" name="psw" required>
-//   <button class="login-button" type="submit">Log in</button>
-// </div>
-//   `
-//   navContainerLeft.innerText = "Welcome!"
-// }
+
+
+

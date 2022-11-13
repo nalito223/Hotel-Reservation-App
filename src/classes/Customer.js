@@ -6,14 +6,22 @@ class Customer {
     this.name = customerData.name
     this.customerBookingsList = []
   }
-  getCustomerIndex(customerData, testCustomer) {
-    let customerIndex = 0
-    customerData.forEach((customer, index) => {
-      if (customer.id === testCustomer.customerId) {
-        customerIndex = index 
-      }
+  getCustomerIndex(customerData, username) {
+    return customerData.findIndex((customer) => {
+      return customer.id === username
     })
-    return customerIndex
+  }
+  checkCredentials(username, password, customerData) {
+    let verified = false
+    const userExists = customerData.find((customer) => {
+      return username === customer.id
+    })
+    if (userExists && password === 'overlook2021') {
+      verified = true
+    } else {
+      verified = false
+    }
+    return verified
   }
 }
 
