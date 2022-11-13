@@ -29,6 +29,9 @@ const bookRoomButton = document.querySelector('#book-a-room-button')
 const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
+const usernameInput = document.querySelector('.login-input-username')
+const passwordInput = document.querySelector('.login-input-password')
+const loginButton = document.querySelector('.login-button')
 
 // global variables
 let testCustomer
@@ -57,10 +60,10 @@ window.addEventListener('load', () => {
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
 myBookingsButton.addEventListener('click', displayMyBookings)
 findRoomButton.addEventListener('click', (event) => event.preventDefault())
-// table.addEventListener('click', (event) => {
-// })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
+loginButton.addEventListener('click', evaluateLogin)
+
 document.addEventListener('keypress', event => {
   if(event.key === "Enter") {
     event.preventDefault()
@@ -133,8 +136,8 @@ function initPage(response) {
   testCustomer = new Customer(response[2].customers[3])
   currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-  displayMyBookings()
-  // displayLogInPage()
+  // displayMyBookings()
+  displayLogInPage()
 }
 
 function displayBookRoomExperience() {
@@ -222,25 +225,19 @@ function sortBookingsByDate() {
 }
 
 
-// NOTE: everything below is commented out since it's the log in page and will interfere with the Lighthouse audit 
-// function displayLogInPage() {
-//   tableContainer.classList.add('hidden')
-//   totalsContainer.classList.add('hidden')
-//   navContainerRight.classList.add('hidden')
-//   textBanner.innerText = 'Log in to get started'
-//   inputContainer.innerHTML = `
+function displayLogInPage() {
+  tableContainer.classList.add('hidden')
+  totalsContainer.classList.add('hidden')
+  navContainerRight.classList.add('hidden')
+  inputContainer.classList.add('hidden')
+  navContainerLeft.classList.add('loginStyling')
+  textBanner.innerText = 'Please sign in to get started'
+  navContainerLeft.innerText = "Welcome!"
+}
 
-//   <div class="sign-in-container">
-//   <label for="uname">
-//     <b>Username</b>
-//   </label>
-//   <input class="login-input-username" type="text" placeholder="Enter Username" name="uname" required>
-//   <label for="psw">
-//     <b>Password</b>
-//   </label>
-//   <input class="login-input-password" type="password" placeholder="Enter Password" name="psw" required>
-//   <button class="login-button" type="submit">Log in</button>
-// </div>
-//   `
-//   navContainerLeft.innerText = "Welcome!"
-// }
+function evaluateLogin(event) {
+  event.preventDefault()
+  let username 
+  let password
+  
+}
