@@ -195,6 +195,7 @@ function displayTableInstructions() {
 }
 
 function displayMyBookings() {
+  mainContainer.classList.remove('add-padding')
   signInForm.classList.add('hidden')
   tableContainer.classList.remove('hidden')
   totalsContainer.classList.remove('hidden')
@@ -256,6 +257,7 @@ function displayLogInPage() {
   navContainerRight.classList.add('hidden')
   inputContainer.classList.add('hidden')
   navContainerLeft.classList.add('loginStyling')
+  mainContainer.classList.add('add-padding')
   textBanner.innerText = 'Please sign in to get started'
   navContainerLeft.innerText = "Welcome!"
 }
