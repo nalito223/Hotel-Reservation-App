@@ -248,7 +248,6 @@ function sortBookingsByDate() {
   })
 }
 
-
 function displayLogInPage() {
   usernameInput.value = ''
   passwordInput.value = ''
@@ -265,24 +264,19 @@ function evaluateLogin(event) {
   event.preventDefault()
   let username = Number(usernameInput.value.slice(8))
   let password = passwordInput.value
-
-  console.log("BEFORE", testCustomer)
   let verified = testCustomer.checkCredentials(username, password, customerData) 
   if (verified) {
     currCustomerIndex = testCustomer.getCustomerIndex(customerData, username)
     bookings = new Bookings(bookingsData, roomData)
-    console.log(customerData[currCustomerIndex])
     testCustomer = new Customer(customerData[currCustomerIndex])
-    console.log("AFTER", testCustomer)
-    console.log("eval log in", currCustomerIndex)
     testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
     displayMyBookings()
   } else {
-    alert("wrong password")
+    textBanner.innerText = '*Incorrect username or password. Please try again. Case sensitive.'
   }
 }
 
-  //  testCustomer = new Customer(response[2].customers[3])
-  //  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
+
+  
 
  
