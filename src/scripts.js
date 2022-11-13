@@ -1,6 +1,6 @@
 // imports 
 import { getData, postData, getAllData } from './apiCalls'
-import './css/styles.css';
+import './css/styles.css'
 import { Customer } from './classes/Customer'
 import { Bookings } from './classes/Bookings'
 
@@ -30,23 +30,21 @@ const findRoomButton = document.querySelector('.find-room-button')
 const dateSelector = document.querySelector('.date-selector')
 const tableSelect = document.querySelector('.table-select')
 
-
-
 // global variables
 let testCustomer
-let bookings 
-let customerData 
+let bookings
+let customerData
 let bookingsData
 let roomData
-let customerBookings 
-let randomIndex 
-const currentDate = new Date();
-let day = currentDate.getDate();
-let month = currentDate.getMonth();
-let year = currentDate.getFullYear();
+let customerBookings
+let randomIndex
+const currentDate = new Date()
+let day = currentDate.getDate()
+let month = currentDate.getMonth()
+let year = currentDate.getFullYear()
 let calendarPastDisableDate
 let calendarFutureDisableDate
-let currCustomerIndex 
+let currCustomerIndex
 let customerID
 
 // event listeners
@@ -58,23 +56,27 @@ window.addEventListener('load', () => {
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
 myBookingsButton.addEventListener('click', displayMyBookings)
-// inputContainer.addEventListener('click', (event) => console.log("itworks", event))
 findRoomButton.addEventListener('click', (event) => event.preventDefault())
-table.addEventListener('click', (event) => {
-  console.log(event.target.id)
-})
+// table.addEventListener('click', (event) => {
+// })
 findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
+document.addEventListener('keypress', event => {
+  if(event.key === "Enter") {
+    event.preventDefault()
+    event.target.click()
+  }
+})
 
+//functions
 function postBooking(event) {
   let date = dateSelector.value.split("-").join("/")
   if (event.target.classList.contains('table-button')) {
-    let body = { 
-      "userID": testCustomer.customerId, 
-      "date": `${date}`, 
-      "roomNumber": Number(event.target.id) 
+    let body = {
+      "userID": testCustomer.customerId,
+      "date": `${date}`,
+      "roomNumber": Number(event.target.id)
     }
-    console.log(body)
     postData(body, urlNewBooking).then((response) => {
       console.log(response)
       getAllData().then((response) => {
@@ -82,12 +84,13 @@ function postBooking(event) {
         customerData = response[2].customers
         bookingsData = response[0].bookings
         roomData = response[1].rooms
-        
         bookings = new Bookings(bookingsData, roomData)
-        testCustomer = new Customer(response[2].customers[2])
+        testCustomer = new Customer(response[2].customers[3])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
-        testCustomer.getCustomerIndex(customerData)
-        displayMyBookings()
+        filterAvailableRooms()
+        if (table.innerHTML === '') {
+          displayTableInstructions()
+        }
       })
     })
   }
@@ -96,11 +99,11 @@ function postBooking(event) {
 function filterAvailableRooms() {
   let date = dateSelector.value
   let type = tableSelect.value
-  if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate ) {
+  if (!date || date < calendarPastDisableDate || date > calendarFutureDisableDate) {
     displayTableInstructions()
   } else {
-  bookings.getAvailableRooms(date, type)
-  displayFilteredTableView()
+    bookings.getAvailableRooms(date, type)
+    displayFilteredTableView()
   }
 }
 
@@ -109,24 +112,26 @@ function displayFilteredTableView() {
   bookings.currAvailableRooms.forEach((availableRoom) => {
     table.innerHTML += `
     <tr>
-    <td>Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
-    <td>${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
-    <td>$${availableRoom.costPerNight}/night</td>
-    <td><button class="table-button" id="${availableRoom.roomNumber}">Book</button></td>
+    <td tabindex="0">Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
+    <td tabindex="0">${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
+    <td tabindex="0">$${availableRoom.costPerNight}/night</td>
+    <td tabindex="0"><button class="table-button" id="${availableRoom.roomNumber}" tabindex="0">Book</button></td>
     </tr>
     `
   })
+  if (table.innerText === '') {
+    displayTableInstructions()
+  }
 }
 
-
 function initPage(response) {
-  randomIndex = Math.floor(Math.random() * response[2].customers.length);
   customerData = response[2].customers
   bookingsData = response[0].bookings
   roomData = response[1].rooms
 
   bookings = new Bookings(bookingsData, roomData)
-  testCustomer = new Customer(response[2].customers[2])
+  testCustomer = new Customer(response[2].customers[3])
+  currCustomerIndex = testCustomer.getCustomerIndex(customerData, testCustomer)
   testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
   displayMyBookings()
   // displayLogInPage()
@@ -136,8 +141,10 @@ function displayBookRoomExperience() {
   inputContainer.classList.remove('hidden')
   bookRoomButton.classList.add('selected-view')
   myBookingsButton.classList.remove('selected-view')
+  myBookingsButton.setAttribute("aria-selected", false)
+  bookRoomButton.setAttribute("aria-selected", true)
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
-  displayBannerText('Start booking by selecting a date and room type below')
+  displayBannerText('Start booking by selecting a date and optional room type below')
   displayTableInstructions()
   displayFilterOptions()
   disableDatesInCalendar()
@@ -156,13 +163,13 @@ function displayFilterOptions() {
     tableSelect.innerHTML += `
     <option id="${type}">${type}</option>
     `
-  }) 
+  })
 }
 
 function displayTableInstructions() {
   table.innerHTML = `
-  <div class="no-results">*No results. Select a date and room type then click 'Find room'.</div>
-  <div class="no-results"> Note: Reservations can be made no later than two days in advance and no sooner than one year into the future.
+  <div class="no-results" tabindex="0">*No results. Select a new date and optional room type then click 'Find room'.</div>
+  <div class="no-results" tabindex="0"> Note: Our sincere apologies if there is no availability on your requested date. Reservations can be made no later than two days in advance and no sooner than one year into the future.
   `
 }
 
@@ -170,6 +177,8 @@ function displayMyBookings() {
   inputContainer.classList.add('hidden')
   myBookingsButton.classList.add('selected-view')
   bookRoomButton.classList.remove('selected-view')
+  myBookingsButton.setAttribute("aria-selected", true)
+  bookRoomButton.setAttribute("aria-selected", false)
   displayHeaderText(`Welcome, ${testCustomer.name.split(' ')[0]}!`)
   displayBannerText('Review your bookings below')
   displayTableViewMyBookings()
@@ -177,14 +186,14 @@ function displayMyBookings() {
 }
 
 function displayTotals() {
- totalBookings.innerText = `Total bookings: ${testCustomer.customerBookingsList.length}`
- totalSpent.innerText =  `Total spent: $${testCustomer.customerBookingsList.reduce((acc, curr) => {
-   return acc += curr.costPerNight
- }, 0).toFixed(2)}`
+  totalBookings.innerText = `Total bookings: ${testCustomer.customerBookingsList.length}`
+  totalSpent.innerText = `Total spent: $${testCustomer.customerBookingsList.reduce((acc, curr) => {
+    return acc += curr.costPerNight
+  }, 0).toFixed(2)}`
 }
 
 function displayHeaderText(text) {
-  navContainerLeft.innerText = text 
+  navContainerLeft.innerText = text
 }
 
 function displayBannerText(text) {
@@ -197,22 +206,23 @@ function displayTableViewMyBookings() {
   testCustomer.customerBookingsList.forEach((booking) => {
     table.innerHTML += `
     <tr>
-    <td>${booking.bookingDate} - Room #${booking.roomNumber}</td>
-    <td>${booking.numBeds} ${booking.bedSize} size bed(s)</td>
-    <td>$${booking.costPerNight}/night</td>
-    <td>ID: ${booking.bookingId}</td>
+    <td tabindex="0">${booking.bookingDate} - Room #${booking.roomNumber}</td>
+    <td tabindex="0">${booking.numBeds} ${booking.bedSize} size bed(s)</td>
+    <td tabindex="0">$${booking.costPerNight}/night</td>
+    <td tabindex="0">ID: ${booking.bookingId}</td>
     </tr>
     `
   })
 }
 
 function sortBookingsByDate() {
-  testCustomer.customerBookingsList = testCustomer.customerBookingsList.sort((a,b) => {
-    console.log(typeof a.bookingDate.split('/').join(''))
+  testCustomer.customerBookingsList = testCustomer.customerBookingsList.sort((a, b) => {
     return Number(a.bookingDate.split('/').join('')) - Number(b.bookingDate.split('/').join(''))
   })
 }
 
+
+// NOTE: everything below is commented out since it's the log in page and will interfere with the Lighthouse audit 
 // function displayLogInPage() {
 //   tableContainer.classList.add('hidden')
 //   totalsContainer.classList.add('hidden')

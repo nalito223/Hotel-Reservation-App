@@ -12,30 +12,27 @@
 </head>
 
 <body>
-
-
-
-
   <div class="overlay"></div>
   <div class="main-container">
     <header>
       <nav class="main-nav-container">
-        <div class="nav-container-left" label="Welcome message for user"></div>
+        <div class="nav-container-left" label="Welcome message for user" tabindex="0"></div>
         <div class="nav-container-right">
-          <button class="nav-buttons" id="my-bookings-button">My bookings</button>
-          <button id="book-a-room-button" class="nav-buttons">Book a room</button>
-          <button class="nav-buttons">Sign out</button>
+          <button class="nav-buttons" id="my-bookings-button" tabindex="0" aria-label="button to view my bookings" aria-selected="false">My
+            bookings</button>
+          <button id="book-a-room-button" class="nav-buttons" tabindex="0"
+          aria-label="button to go to view for making a new booking" aria-selected="false">Book a room</button>
+          <button class="nav-buttons" tabindex="0" aria-label="button to sign out of current account">Sign out</button>
         </div>
       </nav>
     </header>
-
-    <header class="view-text-container">
+    <header class="view-text-container" tabindex="0">
       <h2 class="text-banner"></h2>
     </header>
-
-    <form class="input-container">
-      <input type="date" min="2022-11-11" class="date-selector" data-date-format="YYYY/MMMM/DD"/>
-      <select class="table-select">
+    <form class="input-container" label="Form to filter available rooms by date and type">
+      <input label="Input field for date with format month, day, year" type="date" min="2022-11-11"
+        class="date-selector" data-date-format="YYYY/MMMM/DD" />
+      <select class="table-select" label="drop down select for filtering available rooms by type">
         <option>Choose type...</option>
         <option>Queen</option>
         <option>King</option>
@@ -53,20 +50,12 @@
           <td>$400/night</td>
           <td><button class="table-button">Book</button></td>
         </tr>
-        
       </table>
     </div>
-
-
-
-
-
-
     <section class="totals-container">
-      <h2 id="total-bookings"></h2>
-      <h2 id ="total-spent">Total spent: $400</h2>
+      <h2 id="total-bookings" tabindex="0"></h2>
+      <h2 id="total-spent" tabindex="0">Total spent: $400</h2>
     </section>
-
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
   </div>

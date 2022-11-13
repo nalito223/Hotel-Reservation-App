@@ -5,7 +5,6 @@ const urlBookings = 'http://localhost:3001/api/v1/bookings'
 
 function getData(url) {
   return fetch(url)
-    // .then(response => response.json())
     .then((response) => {
       if (response.ok) {
         return response.json()
@@ -13,9 +12,9 @@ function getData(url) {
         throw Error(response.statusText)
       }
     })
-    .catch(err => {
-      // unhide element here showing error message 
-      console.log(err)});
+    .catch(error => {
+      console.log("GET error: ", error)
+    })
 }
 
 const getAllData = () => {
@@ -41,8 +40,16 @@ function postData(body, url) {
         throw Error(response.statusText)
       }
     })
-    .catch(err => console.log(err))
-    // unhide element here showing error message 
-  }
+    .catch(error => {
+      console.log("Fetch error: ", error)
+      if (error instanceof TypeError) {
+        alert("Sorry, there is an issue with our data server. Please try again later. ")
+      } else if (error instanceof ReferenceError) {
+        alert("There's an issue on our end, we're working on it.")
+      } else {
+        alert("An error occured, please try again later.")
+      }
+    })
+}
 
 export { getData, postData, getAllData } 
