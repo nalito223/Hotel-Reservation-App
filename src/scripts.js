@@ -34,6 +34,7 @@ const usernameInput = document.querySelector('.login-input-username')
 const passwordInput = document.querySelector('.login-input-password')
 const loginButton = document.querySelector('.login-button')
 const signInForm = document.querySelector('.sign-in-form')
+const signOutButton = document.querySelector('#sign-out-button')
 
 // global variables
 let testCustomer
@@ -79,7 +80,14 @@ document.addEventListener('keypress', event => {
   }
 })
 
+signOutButton.addEventListener('click', reloadPage)
+
 //functions
+
+function reloadPage() {
+  window.location.reload()
+}
+
 function postBooking(event) {
   let date = dateSelector.value.split("-").join("/")
   if (event.target.classList.contains('table-button')) {
