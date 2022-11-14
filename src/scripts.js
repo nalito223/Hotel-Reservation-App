@@ -58,7 +58,7 @@ let responseData
 window.addEventListener('load', () => {
   getAllData().then((response) => {
     responseData = response
-    console.log(response)
+    // console.log(response)
     initPage(response)
   }).then((response) => {
   })

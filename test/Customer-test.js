@@ -1,14 +1,21 @@
 import chai from 'chai'
 const expect = chai.expect
 import { Customer } from '../src/classes/Customer'
-import {testDataCustomer, testDataRooms, testDataBookings} from '../src/data/test-data'
+import { testDataCustomer, testDataRooms, testDataBookings } from '../src/data/test-data'
 
 
 describe('Customer', () => {
-  let customer 
+  let customer
+  let customerData
 
   beforeEach(() => {
-    customer = new Customer(testDataCustomer.customers[0])
+
+    customerData = {
+      id: 1,
+      name: "Leatha Ullrich"
+    }
+
+    customer = new Customer(customerData)
   })
 
   it('should be an instance of Customer', () => {

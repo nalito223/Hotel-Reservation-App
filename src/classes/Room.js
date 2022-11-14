@@ -6,10 +6,10 @@ class Room {
     this.bedSize = roomData.bedSize
     this.numBeds = roomData.numBeds
     this.costPerNight = roomData.costPerNight
-    this.bookingId = bookingsData.id;
-    this.userId = bookingsData.userID;
-    this.bookingDate = bookingsData.date;
-    this.roomNumber = bookingsData.roomNumber;
+    this.bookingId = bookingsData.id
+    this.userId = bookingsData.userID
+    this.bookingDate = bookingsData.date
+    this.roomNumber = bookingsData.roomNumber
   }
 }
 

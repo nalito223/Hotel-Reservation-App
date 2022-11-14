@@ -7,7 +7,6 @@ describe('Room', () => {
   let room
   let booking
   let newRoom
-  console.log("LOOK HERE ROOM", testDataBookings.bookings[0])
 
   beforeEach(() => {
     room = {

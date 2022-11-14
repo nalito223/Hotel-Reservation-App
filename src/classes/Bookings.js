@@ -67,11 +67,11 @@ class Bookings {
 
     this.allBookings.forEach((booking) => {
       if (inputDate === booking.bookingDate) {
-          availRooms.push(booking.roomNumber)
+        availRooms.push(booking.roomNumber)
       }
     })
 
-   const finalAnswer = allUniqueRooms.filter((room) => {
+    const finalAnswer = allUniqueRooms.filter((room) => {
       return !availRooms.includes(room.roomNumber)
     })
     this.currAvailableRooms = finalAnswer
