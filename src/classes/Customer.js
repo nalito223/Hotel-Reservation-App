@@ -1,5 +1,3 @@
-const { testDataCustomer } = require("../data/test-data")
-
 class Customer {
   constructor(customerData) {
     this.customerId = customerData.id
