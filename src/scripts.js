@@ -113,7 +113,7 @@ function displayFilteredTableView() {
     <tr>
     <td tabindex="0">Room #${availableRoom.roomNumber} - ${dateSelector.value} </td>
     <td tabindex="0">${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
-    <td tabindex="0">$${availableRoom.costPerNight} - ${availableRoom.roomType}/night</td>
+    <td tabindex="0">$${availableRoom.costPerNight}/night - ${availableRoom.roomType}</td>
     <td tabindex="0"><button class="table-button" id="${availableRoom.roomNumber}" tabindex="0">Book</button></td>
     </tr>
     `
