@@ -57,6 +57,8 @@ findRoomButton.addEventListener('click', filterAvailableRooms)
 table.addEventListener('click', postBooking)
 loginButton.addEventListener('click', evaluateLogin)
 signOutButton.addEventListener('click', reloadPage)
+dateSelector.addEventListener('focus', displayTableInstructions)
+tableSelect.addEventListener('focus', displayTableInstructions)
 document.addEventListener('keypress', event => {
   if (event.key === "Enter") {
     event.preventDefault()
