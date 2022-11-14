@@ -3,7 +3,7 @@
 https://user-images.githubusercontent.com/110144802/201752941-192be5e9-d51d-4ea8-91bc-1870c12260c7.mp4
 
 ### Abstract
- This app allows the user to log in using a username and password to review their future and past hotel reservations as well as book new resevations with a date and room type filter. This was the final solo project during the second term of Turing's front-end software engineering program and focused on our ability to individually design and create an application from scratch to launch in one week. 
+ This app allows the user to log in using a username and password to review their future and past hotel reservations as well as book new reservations with a date and room type filter. This was the final solo project during the second term of Turing's front-end software engineering program and focused on our ability to individually design and create an application from scratch to launch in one week. 
 
 ### Feature Spotlight
 Using Fetch API, this app allows the user to make new reservations and always see their updated reservations as well as updated availability for new reservations. The user will also see tailored error messeages for when there are server issues. 
