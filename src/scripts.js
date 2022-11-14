@@ -58,7 +58,7 @@ let responseData
 window.addEventListener('load', () => {
   getAllData().then((response) => {
     responseData = response
-    console.log(response)
+    // console.log(response)
     initPage(response)
   }).then((response) => {
   })
@@ -91,17 +91,15 @@ function postBooking(event) {
       "roomNumber": Number(event.target.id)
     }
     postData(body, urlNewBooking).then((response) => {
-      console.log(response)
       getAllData().then((response) => {
-        console.log(response)
         customerData = response[2].customers
         bookingsData = response[0].bookings
         roomData = response[1].rooms
         bookings = new Bookings(bookingsData, roomData)
-        console.log(currCustomerIndex)
         testCustomer = new Customer(response[2].customers[currCustomerIndex])
         testCustomer.customerBookingsList = bookings.getCustomerBookings(testCustomer)
         filterAvailableRooms()
+        displayTotals()
         if (table.innerHTML === '') {
           displayTableInstructions()
         }
@@ -159,6 +157,7 @@ function displayBookRoomExperience() {
   displayTableInstructions()
   displayFilterOptions()
   disableDatesInCalendar()
+  displayTotals()
 }
 
 function disableDatesInCalendar() {

@@ -9,6 +9,7 @@ class Bookings {
     this.allPotentialRooms = this.getAllPotentialRooms()
     this.currAvailableRooms = []
   }
+
   getAllBookings() {
     const a = this.bookingsData.reduce((acc, booking) => {
       this.roomsData.forEach((room) => {
@@ -27,6 +28,7 @@ class Bookings {
     })
     return a
   }
+
   getAllRoomTypes() {
     let allRoomTypes = []
     this.allBookings.forEach((booking) => {
@@ -65,11 +67,11 @@ class Bookings {
 
     this.allBookings.forEach((booking) => {
       if (inputDate === booking.bookingDate) {
-          availRooms.push(booking.roomNumber)
+        availRooms.push(booking.roomNumber)
       }
     })
 
-   const finalAnswer = allUniqueRooms.filter((room) => {
+    const finalAnswer = allUniqueRooms.filter((room) => {
       return !availRooms.includes(room.roomNumber)
     })
     this.currAvailableRooms = finalAnswer
