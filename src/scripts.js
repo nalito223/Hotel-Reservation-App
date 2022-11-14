@@ -1,21 +1,15 @@
 // imports 
-import { getData, postData, getAllData } from './apiCalls'
+import { postData, getAllData } from './apiCalls'
 import './css/styles.css'
 import { Customer } from './classes/Customer'
 import { Bookings } from './classes/Bookings'
-import { getCustomer } from './classes/Customer'
 
 // api urls
-const urlCustomers = 'http://localhost:3001/api/v1/customers'
-const urlRooms = 'http://localhost:3001/api/v1/rooms'
-const urlBookings = 'http://localhost:3001/api/v1/bookings'
-let urlSingleCustomer = 'http://localhost:3001/api/v1/customers/'
 const urlNewBooking = 'http://localhost:3001/api/v1/bookings'
 
 // query selectors
 const tableContainer = document.querySelector('.table-container')
 const totalsContainer = document.querySelector('.totals-container')
-const mainNavContainer = document.querySelector('.main-nav-container')
 const mainContainer = document.querySelector('.main-container')
 const navContainerRight = document.querySelector('.nav-container-right')
 const inputContainer = document.querySelector('.input-container')
@@ -42,8 +36,6 @@ let bookings
 let customerData
 let bookingsData
 let roomData
-let customerBookings
-let randomIndex
 const currentDate = new Date()
 let day = currentDate.getDate()
 let month = currentDate.getMonth()
@@ -51,16 +43,11 @@ let year = currentDate.getFullYear()
 let calendarPastDisableDate
 let calendarFutureDisableDate
 let currCustomerIndex
-let customerID
-let responseData
 
 // event listeners
 window.addEventListener('load', () => {
   getAllData().then((response) => {
-    responseData = response
-    // console.log(response)
     initPage(response)
-  }).then((response) => {
   })
 })
 bookRoomButton.addEventListener('click', displayBookRoomExperience)
@@ -90,7 +77,7 @@ function postBooking(event) {
       "date": `${date}`,
       "roomNumber": Number(event.target.id)
     }
-    postData(body, urlNewBooking).then((response) => {
+    postData(body, urlNewBooking).then(() => {
       getAllData().then((response) => {
         customerData = response[2].customers
         bookingsData = response[0].bookings
@@ -124,9 +111,9 @@ function displayFilteredTableView() {
   bookings.currAvailableRooms.forEach((availableRoom) => {
     table.innerHTML += `
     <tr>
-    <td tabindex="0">Room #${availableRoom.roomNumber} - ${availableRoom.roomType}</td>
+    <td tabindex="0">Room #${availableRoom.roomNumber} - ${dateSelector.value} </td>
     <td tabindex="0">${availableRoom.numBeds} ${availableRoom.bedSize} size bed(s)</td>
-    <td tabindex="0">$${availableRoom.costPerNight}/night</td>
+    <td tabindex="0">$${availableRoom.costPerNight} - ${availableRoom.roomType}/night</td>
     <td tabindex="0"><button class="table-button" id="${availableRoom.roomNumber}" tabindex="0">Book</button></td>
     </tr>
     `

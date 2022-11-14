@@ -1,7 +1,6 @@
 import chai from 'chai'
 const expect = chai.expect
 import { Room } from '../src/classes/Room'
-import { testDataCustomer, testDataRooms, testDataBookings } from '../src/data/test-data'
 
 describe('Room', () => {
   let room

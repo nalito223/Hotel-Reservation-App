@@ -1,21 +1,36 @@
 import chai from 'chai'
 const expect = chai.expect
 import { Customer } from '../src/classes/Customer'
-import { testDataCustomer, testDataRooms, testDataBookings } from '../src/data/test-data'
-
 
 describe('Customer', () => {
   let customer
   let customerData
 
   beforeEach(() => {
-
-    customerData = {
+  
+  customerData = [{
       id: 1,
       name: "Leatha Ullrich"
-    }
+      },
+      {
+      id: 2,
+      name: "Rocio Schuster"
+      },
+      {
+      id: 3,
+      name: "Kelvin Schiller"
+      },
+      {
+      id: 4,
+      name: "Kennedi Emard"
+      },
+      {
+      id: 5,
+      name: "Rhiannon Little"
+      }]
 
-    customer = new Customer(customerData)
+    customer = new Customer(customerData[0])
+
   })
 
   it('should be an instance of Customer', () => {
@@ -31,7 +46,6 @@ describe('Customer', () => {
   })
 
   it('should get customer index', () => {
-    let customerData = testDataCustomer.customers
     const index = customer.getCustomerIndex(customerData, 2)
     expect(index).to.equal(1)
     const index2 = customer.getCustomerIndex(customerData, 30)
@@ -39,7 +53,6 @@ describe('Customer', () => {
   })
 
   it('should test if log in credentials are verified', () => {
-    let customerData = testDataCustomer.customers
     let password = "overlook2021"
     let username = 2
     const verified = customer.checkCredentials(username, password, customerData)
@@ -47,7 +60,6 @@ describe('Customer', () => {
 
   })
   it('should test if log in password is not verified', () => {
-    let customerData = testDataCustomer.customers
     let password = "Overlook2021"
     let username = 2
     const verified = customer.checkCredentials(username, password, customerData)
@@ -55,7 +67,6 @@ describe('Customer', () => {
   })
 
   it('should test if log in username is not verified', () => {
-    let customerData = testDataCustomer.customers
     let password = "overlook2021"
     let username = 600
     const verified = customer.checkCredentials(username, password, customerData)
