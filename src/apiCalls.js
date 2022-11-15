@@ -13,7 +13,8 @@ function getData(url) {
       }
     })
     .catch(error => {
-      console.log("GET error: ", error)
+      alert("Our apologies, there's been an issue. Please refresh the site or try again later.")
+      console.log("Fetch error", error)
     })
 }
 
