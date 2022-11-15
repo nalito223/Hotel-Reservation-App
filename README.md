@@ -6,7 +6,7 @@ https://user-images.githubusercontent.com/110144802/201752941-192be5e9-d51d-4ea8
  This app allows the user to log in using a username and password to review their future and past hotel reservations as well as book new reservations with a date and room type filter. This was the final solo project during the second term of Turing's front-end software engineering program and focused on our ability to individually design and create an application from scratch to launch in one week. 
 
 ### Feature Spotlight
-Using Fetch API, this app allows the user to make new reservations and always see their updated reservations as well as updated availability for new reservations. The user will also see tailored error messeages for when there are server issues. 
+Using Fetch API, this app allows the user to make new reservations and always see their updated reservations as well as updated availability for new reservations. The user will also see tailored error messages for when there are server issues. 
 
 ### Contributors
 Solo project 
@@ -27,7 +27,7 @@ Solo project
 
 ### Methodologies
 - Error handling the user experience as well as network errors 
-- Ensure accessiblity through WAI ARIA states, roles, and properties 
+- Ensure accessibility through WAI ARIA states, roles, and properties 
 - Implement ES6 classes which support a complex data model
 - Use object and array prototype methods to perform data manipulation
 - Create a user interface that is easy to use and clearly displays information
